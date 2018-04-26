@@ -19,6 +19,30 @@ pub struct ThirdPartySigned {
     pub token: String,
 }
 
+/// [GET /_matrix/client/r0/joined_rooms](https://matrix.org/docs/spec/client_server/r0.3.0.html#get-matrix-client-r0-joined-rooms)
+pub mod joined_rooms {
+    use ruma_api_macros::ruma_api;
+    use ruma_identifiers::RoomId;
+
+    ruma_api! {
+        metadata {
+            description: "Get a list of the user's current rooms.",
+            method: Method::Get,
+            name: "joined_rooms",
+            path: "/_matrix/client/r0/joined_rooms",
+            rate_limited: false,
+            requires_authentication: true,
+        }
+
+        request {}
+
+        response {
+            /// A list of the rooms the user is in.
+            pub joined_rooms: Vec<RoomId>,
+        }
+    }
+}
+
 /// [POST /_matrix/client/r0/rooms/{roomId}/invite](https://matrix.org/docs/spec/client_server/r0.2.0.html#post-matrix-client-r0-rooms-roomid-invite)
 pub mod invite_user {
     use ruma_api_macros::ruma_api;
