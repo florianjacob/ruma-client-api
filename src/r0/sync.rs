@@ -199,6 +199,7 @@ pub mod sync_events {
 
     use ruma_api_macros::ruma_api;
     use ruma_events::collections::{all, only};
+    use ruma_events::stripped;
     use ruma_identifiers::RoomId;
 
     use r0::filter::FilterDefinition;
@@ -359,7 +360,12 @@ pub mod sync_events {
     #[derive(Clone, Debug, Deserialize, Serialize)]
     pub struct InviteState {
         /// A list of state events.
-        pub events: Vec<only::StateEvent>,
+        // pub events: Vec<only::StateEvent>,
+        // workaround: what we have here is somewhat similar to the old StrippedState events,
+        // but actually have at least an additional "sender" property.
+        // does not need only:: because all StrippedState Events are equal(?)
+        // TODO: fix this properly
+        pub events: Vec<stripped::StrippedState>,
     }
 
     /// Updates to the presence status of other users.
